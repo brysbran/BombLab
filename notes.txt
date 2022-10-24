@@ -1,0 +1,43 @@
+phase 1
+----------------------
+-used objdump and it was out in the open
+
+phase 2
+----------------------
+- fibonacci sequence, calls recursively to compare if the given int is correct
+
+
+phase 3 notes
+-----------------------
+- first number must be greater than length 2
+	testing used 3, which is greater than length 2
+	-(gdb) p /x $eax
+		$1 = 0x3
+-expecting char for 2nd piece
+ 	- skips char for 2nd case but comes back to it at the end
+ 	- char is stored in %al, which is least sig byte of %rax
+ 	- when call x/1d $al gives 0x76, which converting from hex
+  	  to char is "v"
+-expecting number for 3rd piece
+ 	- 866
+
+phase 4
+----------------------
+
+- firstly by searching "x/s 0x5555555572ef" returns "%d %d" given by one of the comments
+out to the side this tells me the answer format is "int int"
+- the first "cmp" compares if there are two given ints and if so, it falls
+though the bomb call to the next comparison
+- after a funct 4 is called later on in the phase, the vlaue in %eax is compared to 7.
+	- if not 7, bomb is called
+- then if  8 bytes past %rsp is 7, we are done
+
+
+#################
+# GENERAL NOTES #
+#################
+
+- to find value in register with an offset, "x/1d $rsp+12" for "0xc(%rsp)
+
+
+
