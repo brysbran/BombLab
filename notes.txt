@@ -28,6 +28,21 @@ phase 4
 out to the side this tells me the answer format is "int int"
 - the first "cmp" compares if there are two given ints and if so, it falls
 though the bomb call to the next comparison
+- at +31 we compare 0x2 to %eax, and jump to +43 if 0x2 is not equal to %eax
+- at +36 we have 0xE (14) being compared to what's 12 bytes beyond %rsp, which is 1.
+	- this jumps (JBE == jump if below or equal) to +48 when the input ints are 1 and 2.
+----------------
+Inside Funct4()
+----------------
+- Up to line +10, registers %rax, $rcx, %rdx all contain 14
+- At +10, %ecx is getting shifted right by 32
+- +13 that value in %eax(14) is getting added to %ecx (0)
+- +15 ecx gets shifted arithmetic right once
+- +17 %esi is added to %ecx rsulting in 7 in %ecx
+- +19 compare %edi(=1) and %ecx(=7), then jumps to +35 if edi is greater than ecx
+- +35 subtracts 1 from edx making it 6.
+- 
+                                                                                                                                                                                                                                     
 - after a funct 4 is called later on in the phase, the vlaue in %eax is compared to 7.
 	- if not 7, bomb is called
 - then if  8 bytes past %rsp is 7, we are done
